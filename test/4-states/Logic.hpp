@@ -15,9 +15,10 @@ struct InputData
 
 struct OutputData
 {
-    std::string feature_state;
+    std::string feature_state = "Off";
     std::vector<double> position;
     std::vector<double> rotation;
+    bool cancelation_flag;
 };
 
 namespace State {
@@ -35,16 +36,16 @@ struct Start
     // members
 
     // transition
-    auto accept(InputData const&, OutputData&) -> OneOf<Idle>;
+    auto accept(InputData const&, OutputData&) const -> OneOf<Start, Idle>;
 };
 
 struct Idle 
 {
     // members
-    std::uint32_t id;
+    std::uint32_t request_id;
 
     // transition
-    auto accept(InputData const&, OutputData&) -> OneOf<Showing, Idle>;
+    auto accept(InputData const&, OutputData&) const -> OneOf<Start, Showing, Idle>;
 };
 
 struct Showing 
@@ -54,7 +55,7 @@ struct Showing
     std::string text;
 
     // transition
-    auto accept(InputData const&, OutputData&) -> OneOf<Showing, Stop>;
+    auto accept(InputData const&, OutputData&) const -> OneOf<Showing, Stop>;
 };
 
 struct Stop 
@@ -64,7 +65,7 @@ struct Stop
     double  result;
 
     // transition
-    auto accept(InputData const&, OutputData&) -> OneOf<Start>;
+    auto accept(InputData const&, OutputData&) const -> OneOf<Start>;
 };
 
 using Type = OneOf<Start, Idle, Showing, Stop>;
@@ -74,7 +75,7 @@ using Type = OneOf<Start, Idle, Showing, Stop>;
 
 using LogicResult = std::pair<OutputData, State::Type>;
 
-LogicResult logic(InputData const&, State::Type);
+LogicResult logic(InputData const&, State::Type const&);
 
 }   // namespace XYZLogic
 

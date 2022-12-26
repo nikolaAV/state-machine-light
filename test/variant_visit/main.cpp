@@ -35,24 +35,24 @@ using shape = std::variant<circle,square,triangle,rectangle>;
 using input = std::vector<double>; 
 using output = std::array<double,2>; 
 
-auto accept(circle const&, input const&, output&) {
+shape accept(circle const&, input const&, output&) {
     // ..
-    return shape{square{}};    
+    return square{};
 }
 
 auto accept(square const&, input const&, output&) {
     // ..
-    return shape{triangle{}};    
+    return std::variant<triangle>{};
 }
 
 auto accept(triangle const&, input const&, output&) {
     // ..
-    return shape{rectangle{}};    
+    return std::variant<rectangle>{rectangle{1 ,2}}; 
 }
 
-auto accept(rectangle const&, input const&, output&) {
+shape accept(rectangle const&, input const&, output&) {
     // ..
-    return shape{circle{}};    
+    return circle{3.1456};
 }
 
 int main()

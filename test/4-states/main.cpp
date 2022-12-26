@@ -19,6 +19,12 @@ OutputData output;
 
 int main()
 {
+    // iteration 1
     std::tie(output, state) = logic(input, state);
 
+    // iteration 2
+    std::tie(output, state) = logic(input, state);
+
+    // iteration 3
+    std::tie(output, state) = logic(input, state);
 }

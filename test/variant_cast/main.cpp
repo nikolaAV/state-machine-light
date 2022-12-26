@@ -1,5 +1,5 @@
 /*
-    g++ main.cpp -std=c++17 -o exe
+    g++ main.cpp -std=c++17 -Wextra -Wall -pedantic-errors -o exe
 */
 
 #include <cassert>

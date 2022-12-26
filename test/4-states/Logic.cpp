@@ -1,6 +1,6 @@
 
 #include "Logic.hpp"
-#include "../../include/variant_cast.hpp"
+#include "../../include/variant_visit.hpp"
 
 namespace XYZLogic {
 
@@ -9,63 +9,53 @@ namespace {
 constexpr auto c_success = std::uint32_t{0};
 constexpr auto c_error_disabled = std::uint32_t{1};
 
-bool isAwaiting(InputData const& in)
-{
-    // ....
+bool isAwaiting(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-uint32_t makeRequest(InputData const& in)
-{
-    // ....
+uint32_t makeRequest(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-uint32_t updateRequest(InputData const& in, uint32_t previous)
-{
-    // ....
+uint32_t updateRequest(InputData const& in, uint32_t previous) {
+    (void)in; (void)previous; // ....
     return {};
 }
 
-std::vector<double> calculatePosition(InputData const& in)
-{
-    // ....
+std::vector<double> calculatePosition(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-std::vector<double> calculateRotation(InputData const& in)
-{
-    // ....
+std::vector<double> calculateRotation(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-uint32_t getDuration(InputData const& in)
-{
-    // ....
+uint32_t getDuration(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-std::string getText(InputData const& in)
-{
-    // ....
+std::string getText(InputData const& in) {
+    (void)in; // ....
     return {};
 }
 
-uint32_t getError(InputData const& in, std::uint32_t duration)
-{
-    // ....
+uint32_t getError(InputData const& in, std::uint32_t duration) {
+    (void)in; (void)duration; // ....
     return {};
 }
 
-double getResult(InputData const& in, std::string const& text)
-{
-    // ....
+double getResult(InputData const& in, std::string const& text) {
+    (void)in; (void)text; // ....
     return {};
 }
 
-bool transform(State::Stop const& data)
-{
-    // ...
+bool transform(State::Stop const& data) {
+    (void)data; // ...
     return {};
 }
 
@@ -73,7 +63,10 @@ bool transform(State::Stop const& data)
 
 using namespace State;
 
-OneOf<Start, Idle> Start::accept(InputData const& in, OutputData& out) const
+template <typename StateT>
+using Transition_t = typename StateT::Transition;
+
+Transition_t<Start> accept(Start const&, InputData const& in, OutputData& out)
 {
     auto const processEnabled = [&] {
         out.feature_state = "Awaiting";
@@ -84,15 +77,15 @@ OneOf<Start, Idle> Start::accept(InputData const& in, OutputData& out) const
         return Start {};
     }; 
 
-    using TransitionType = OneOf<Start, Idle>;
+    using ret_t = Transition_t<Start>;
     return 
         in.enabled ?
-            TransitionType{processEnabled()} :
-            TransitionType{processDisabled()}
+            ret_t{processEnabled()} :
+            ret_t{processDisabled()}
     ;
 }
 
-OneOf<Start, Showing, Idle> Idle::accept(InputData const& in, OutputData& out) const
+Transition_t<Idle> accept(Idle const& current, InputData const& in, OutputData& out)
 {
     auto const processDisabled = [&] {
         out.feature_state = "Off";
@@ -100,7 +93,7 @@ OneOf<Start, Showing, Idle> Idle::accept(InputData const& in, OutputData& out) c
     }; 
     auto const processIdle = [&] {
         out.feature_state = "Awaiting";
-        return Idle { updateRequest(in, this->request_id)};
+        return Idle { updateRequest(in, current.request_id)};
     }; 
     auto const processAnimation = [&] {
         out.feature_state = "On";
@@ -112,17 +105,17 @@ OneOf<Start, Showing, Idle> Idle::accept(InputData const& in, OutputData& out) c
         };
     }; 
 
-    using TransitionType = OneOf<Start, Showing, Idle>;
+    using ret_t = Transition_t<Idle>;
     return 
         !in.enabled ?
-            TransitionType{processDisabled()} :
+            ret_t{processDisabled()} :
         isAwaiting(in) ?
-            TransitionType{processIdle()} :
-            TransitionType{processAnimation()}
+            ret_t{processIdle()} :
+            ret_t{processAnimation()}
     ;
 }
 
-OneOf<Showing, Stop> Showing::accept(InputData const& in, OutputData& out) const
+Transition_t<Showing> accept(Showing const& current, InputData const& in, OutputData& out)
 {
     auto const processDisabled = [&] {
         out.feature_state = "Off";
@@ -130,7 +123,7 @@ OneOf<Showing, Stop> Showing::accept(InputData const& in, OutputData& out) const
     }; 
     auto const processInterrupted = [&] {
         out.feature_state = "Off";
-        return Stop { getError(in, this->duration), {}};
+        return Stop { getError(in, current.duration), {}};
     }; 
     auto const processAnimation = [&] {
         out.feature_state = "On";
@@ -143,39 +136,34 @@ OneOf<Showing, Stop> Showing::accept(InputData const& in, OutputData& out) const
     }; 
     auto const processFinish = [&] {
         out.feature_state = "On";
-        return Stop { c_success, getResult(in, this->text)};
+        return Stop { c_success, getResult(in, current.text)};
     }; 
 
-    using TransitionType = OneOf<Showing, Stop>;
+    using ret_t = Transition_t<Showing>;
     return 
         !in.enabled ?
-            TransitionType{processDisabled()} :
+            ret_t{processDisabled()} :
         in.signal1 < in.signal2 + in.signal3 ?
-            TransitionType{processInterrupted()} :
+            ret_t{processInterrupted()} :
         in.signal1 > in.signal2 + in.signal3 ?
-            TransitionType{processAnimation()} :
-            TransitionType{processFinish()}     // case: in.signal1 == in.signal2 + in.signal3
+            ret_t{processAnimation()} :
+            ret_t{processFinish()}     // case: in.signal1 == in.signal2 + in.signal3
     ;
 }
 
-OneOf<Start> Stop::accept(InputData const& in, OutputData& out) const
+Transition_t<Stop> accept(Stop const& current, InputData const&, OutputData& out)
 {
     out.feature_state = "Off";
-    out.cancelation_flag = transform(*this);
+    out.cancelation_flag = transform(current);
     return Start{};
 }
-
 LogicResult logic(InputData const& in, State::Type const& state)
 {
     using namespace variant_ext;
 
+    using namespace variant_ext;
     OutputData out;
-    State::Type new_state;
-    std::visit(
-         [&](auto&& underlying){ new_state = variant_cast<State::Type>(underlying.accept(in, out)); }
-        ,state
-    );    
-    return {std::move(out), std::move(new_state)};
+    return { std::move(out), visit(state, in, out)};
 }
 
 } // namespace XYZLogic

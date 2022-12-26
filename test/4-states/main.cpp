@@ -1,6 +1,6 @@
 /*
     g++ main.cpp Logic.cpp -std=c++14 -o exe -g
-    g++ main.cpp Logic.cpp -std=c++17 -o exe
+    g++ main.cpp Logic.cpp -std=c++17 -Wextra -Wall -pedantic-errors -o exe
 */
 
 // #define NDEBUG

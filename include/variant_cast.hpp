@@ -8,9 +8,12 @@
 // Restricted variant is allowed to be assignable to the primary variant,
 // if the restricted contains a subset of types from a list which composes the primary one.
 // This is very similar to relationship 'base-derived' in OOP
-// variant<char,int,double> f = variant<double,char> {3.14} - Ok
-// variant<char,int,double> f = variant<double,char> {'X'} -bad_variant_access in run-time      
-//
+// @code 
+//     using Primary = std::variant<std::string,int,double>; 
+//     using Specific = std::variant<double, char>; 
+//     Primary p = variant_cast<Primary>(Specific{3.14}); - Ok
+//     Primary p = variant_cast<Primary>(Specific{'A'}); - exception: bad_variant_access in run-time
+// @endcode
 
 namespace variant_ext {
 

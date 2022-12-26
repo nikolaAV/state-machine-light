@@ -31,41 +31,33 @@ struct Idle;
 struct Showing;
 struct Stop;
 
-struct Start 
-{
-    // members
 
-    // transition
-    auto accept(InputData const&, OutputData&) const -> OneOf<Start, Idle>;
+struct Start
+{
+    using Transition = OneOf<Start, Idle>;
 };
 
-struct Idle 
+struct Idle
 {
-    // members
+    using Transition = OneOf<Start, Showing, Idle>;
+
     std::uint32_t request_id;
-
-    // transition
-    auto accept(InputData const&, OutputData&) const -> OneOf<Start, Showing, Idle>;
 };
 
-struct Showing 
+struct Showing
 {
-    // members
+    using Transition = OneOf<Showing, Stop>;
+
     std::uint32_t duration;
     std::string text;
-
-    // transition
-    auto accept(InputData const&, OutputData&) const -> OneOf<Showing, Stop>;
 };
 
-struct Stop 
+struct Stop
 {
-    // members
+    using Transition = OneOf<Start>;
+
     std::uint32_t error_code;
     double  result;
-
-    // transition
-    auto accept(InputData const&, OutputData&) const -> OneOf<Start>;
 };
 
 using Type = OneOf<Start, Idle, Showing, Stop>;

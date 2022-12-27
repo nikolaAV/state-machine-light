@@ -1,8 +1,21 @@
 
+#include <type_traits>
+
 #include "Logic.hpp"
 #include "../../include/variant_visit.hpp"
 
 namespace XYZLogic {
+
+namespace cpp20 {
+template<typename T>
+struct remove_cvref {
+    typedef std::remove_cv_t<std::remove_reference_t<T>> type;
+};
+
+template<typename T>
+using remove_cvref_t = typename remove_cvref<T>::type;
+
+}   // namespace cpp20
 
 namespace {
 
@@ -61,12 +74,16 @@ bool transform(State::Stop const& data) {
 
 }   // end of anonymous namespace
 
-using namespace State;
 
 template <typename StateT>
 using Transition_t = typename StateT::Transition;
 
-Transition_t<Start> accept(Start const&, InputData const& in, OutputData& out)
+#define NEXT_TRANSITION(current_state)   \
+      Transition_t<cpp20::remove_cvref_t<decltype(current_state)>>     
+
+using namespace State;
+
+auto accept(Start const& current, InputData const& in, OutputData& out)
 {
     auto const processEnabled = [&] {
         out.feature_state = "Awaiting";
@@ -77,15 +94,15 @@ Transition_t<Start> accept(Start const&, InputData const& in, OutputData& out)
         return Start {};
     }; 
 
-    using ret_t = Transition_t<Start>;
+    using transition = NEXT_TRANSITION(current);
     return 
         in.enabled ?
-            ret_t{processEnabled()} :
-            ret_t{processDisabled()}
+            transition{processEnabled()} :
+            transition{processDisabled()}
     ;
 }
 
-Transition_t<Idle> accept(Idle const& current, InputData const& in, OutputData& out)
+auto accept(Idle const& current, InputData const& in, OutputData& out)
 {
     auto const processDisabled = [&] {
         out.feature_state = "Off";
@@ -105,17 +122,17 @@ Transition_t<Idle> accept(Idle const& current, InputData const& in, OutputData& 
         };
     }; 
 
-    using ret_t = Transition_t<Idle>;
+    using transition = NEXT_TRANSITION(current);
     return 
         !in.enabled ?
-            ret_t{processDisabled()} :
+            transition{processDisabled()} :
         isAwaiting(in) ?
-            ret_t{processIdle()} :
-            ret_t{processAnimation()}
+            transition{processIdle()} :
+            transition{processAnimation()}
     ;
 }
 
-Transition_t<Showing> accept(Showing const& current, InputData const& in, OutputData& out)
+auto accept(Showing const& current, InputData const& in, OutputData& out)
 {
     auto const processDisabled = [&] {
         out.feature_state = "Off";
@@ -139,23 +156,25 @@ Transition_t<Showing> accept(Showing const& current, InputData const& in, Output
         return Stop { c_success, getResult(in, current.text)};
     }; 
 
-    using ret_t = Transition_t<Showing>;
+    using transition = NEXT_TRANSITION(current);
     return 
         !in.enabled ?
-            ret_t{processDisabled()} :
+            transition{processDisabled()} :
         in.signal1 < in.signal2 + in.signal3 ?
-            ret_t{processInterrupted()} :
+            transition{processInterrupted()} :
         in.signal1 > in.signal2 + in.signal3 ?
-            ret_t{processAnimation()} :
-            ret_t{processFinish()}     // case: in.signal1 == in.signal2 + in.signal3
+            transition{processAnimation()} :
+            transition{processFinish()}     // case: in.signal1 == in.signal2 + in.signal3
     ;
 }
 
-Transition_t<Stop> accept(Stop const& current, InputData const&, OutputData& out)
+auto accept(Stop const& current, InputData const&, OutputData& out)
 {
     out.feature_state = "Off";
     out.cancelation_flag = transform(current);
-    return Start{};
+
+    using transition = NEXT_TRANSITION(current);
+    return transition{Start{}};
 }
 LogicResult logic(InputData const& in, State::Type const& state)
 {

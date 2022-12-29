@@ -178,11 +178,11 @@ auto accept(Stop const& current, InputData const&, OutputData& out)
 }
 LogicResult logic(InputData const& in, State::Type const& state)
 {
-    using namespace variant_ext;
-
-    using namespace variant_ext;
     OutputData out;
-    return { std::move(out), visit(state, in, out)};
+    return {
+         std::move(out)                     // <-- reference to output
+        ,variant_ext::visit(state, in, out) // <-- new state
+    };
 }
 
 } // namespace XYZLogic

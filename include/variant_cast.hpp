@@ -10,9 +10,11 @@
 // This is very similar to relationship 'base-derived' in OOP
 // @code 
 //     using Primary = std::variant<std::string,int,double>; 
-//     using Specific = std::variant<double, char>; 
+//     using Specific = std::variant<double, int>; 
 //     Primary p = variant_cast<Primary>(Specific{3.14}); - Ok
-//     Primary p = variant_cast<Primary>(Specific{'A'}); - exception: bad_variant_access in run-time
+//
+//     using Incompliant = std::variant<std::string,int,double,char>;
+//     Primary p = variant_cast<Primary>(Incompliant{3.14}); - Compile error: no match for operator=(Primary&, char) 
 // @endcode
 
 namespace variant_ext {

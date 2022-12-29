@@ -1,0 +1,50 @@
+@startuml
+
+[*] --> Start
+
+Start --> Idle: enabled:true
+    note on link
+    feature_state = "Awaiting"
+    end note
+Start --> Start: enabled:false
+    note on link
+    feature_state = "Off"
+    end note
+
+Idle --> Start : enabled:false
+    note on link
+    feature_state = "Off"
+    end note
+Idle --> Idle : isAwaiting:true
+    note on link
+    feature_state = "Awaiting"
+    end note
+Idle --> Showing : isAwaiting:false
+    note on link
+    feature_state = "On"
+    position = ...
+    rotation = ...
+    end note
+
+Showing --> Showing
+    note on link
+    feature_state = "On"
+    position = ...
+    rotation = ...
+    end note
+Showing --> Stop: enabled:false, interrapted or finished
+    note on link
+    feature_state = "Off"
+    end note
+
+Stop --> Start
+
+Idle: request_id : uint32  
+
+Showing: duration : uint32  
+Showing: text : string 
+
+Stop: error_code : uint32  
+Stop: result : double
+
+@enduml

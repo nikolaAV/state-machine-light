@@ -4,12 +4,12 @@
 #include "variant_cast.hpp"
 
 //
-// Dispatches function call depending on a real underlying value type stored in a variant
+// Dispatches function call in compile time depending on a real underlying value type stored in a variant
 // Invoked function specification: accept(ValueType, InputType, OutputType) : std::variant<predefined types...>
 // @param [in] var std::variant value storing something from a list of predefined types
 // @param [in] in input data of any type 
-// @param [out] in output data of any type 
-// @return std::variant of predefined types
+// @param [out] out output data of any type 
+// @return std::variant of predefined types which contains a value returned by the selected 'accept'
 // @code 
 //      using OneOf = std::variant<int, double, UserDefined>;
 //      auto accept(UserDefined const& v, Type1 const& input, Type2& output) {
@@ -18,6 +18,7 @@
 //      }
 //      auto ret = visit(OneOf{UserDefined{...}}, input, output);
 // @endcode
+// @note successful compilation is required 'accept' definition for each predefined types specified in the primary variant
 
 namespace variant_ext {
 

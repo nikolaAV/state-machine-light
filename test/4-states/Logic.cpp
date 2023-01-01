@@ -1,21 +1,9 @@
-
-#include <type_traits>
-
 #include "Logic.hpp"
 #include "../../include/variant_visit.hpp"
+#include "../../include/remove_cvref.hpp"
 
 namespace XYZLogic {
 
-namespace cpp20 {
-template<typename T>
-struct remove_cvref {
-    typedef std::remove_cv_t<std::remove_reference_t<T>> type;
-};
-
-template<typename T>
-using remove_cvref_t = typename remove_cvref<T>::type;
-
-}   // namespace cpp20
 
 namespace {
 
@@ -176,12 +164,13 @@ auto accept(Stop const& current, InputData const&, OutputData& out)
     using transition = NEXT_TRANSITION(current);
     return transition{Start{}};
 }
+
 LogicResult logic(InputData const& in, State::Type const& state)
 {
     OutputData out;
     return {
-         std::move(out)                     // <-- reference to output
-        ,variant_ext::visit(state, in, out) // <-- new state
+         std::move(out)
+        ,variant_ext::visit(state, [&](auto&& s){ return accept(s, in, out); })
     };
 }
 

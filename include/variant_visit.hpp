@@ -2,32 +2,35 @@
 #define HEADER_GUARD_YAPFHTGYTKEUPMKE
 
 #include "variant_cast.hpp"
+#include "remove_cvref.hpp"
 
 //
-// Dispatches function call in compile time depending on a real underlying value type stored in a variant
-// Invoked function specification: accept(ValueType, InputType, OutputType) : std::variant<predefined types...>
-// @param [in] var std::variant value storing something from a list of predefined types
-// @param [in] in input data of any type 
-// @param [out] out output data of any type 
-// @return std::variant of predefined types which contains a value returned by the selected 'accept'
+// Applies the visitor vis (Callable that can be called with any type from variant) to the variant var.
+// Visitor specification has to provide overload resolution for every type enclosed in variant var
+//      with the following signature: func(ValueType v) -> std::variant<any subset of the predefined types>
+// @param [in] var std::variant a value storing something from a list of predefined types
+// @param [in] vis callable object(s) wich can be applied to any value from var  
+// @return std::variant of predefined types (the same as type of var) which contains a value returned by vis
 // @code 
-//      using OneOf = std::variant<int, double, UserDefined>;
-//      auto accept(UserDefined const& v, Type1 const& input, Type2& output) {
-//          ...
-//          return OneOf{...};    
+//      using OneOf = std::variant<int, double, UserDefined>; // line A: predefined types
+//      auto accept(int v) { ...
+//      auto accept(double v) { ...
+//      auto accept(UserDefined const& v) {
+//          std::cout << ...v << std::endl;
+//          return OneOf{double};   // <-- any set of types from line A
 //      }
-//      auto ret = visit(OneOf{UserDefined{...}}, input, output);
+//      auto ret = visit(OneOf{UserDefined{...}}, [](v){ return accept(v); });
 // @endcode
-// @note successful compilation is required 'accept' definition for each predefined types specified in the primary variant
+// @see callable https://en.cppreference.com/w/cpp/named_req/Callable
 
 namespace variant_ext {
 
-template <typename InputT, typename OutputT, typename... Ts>
-auto visit(std::variant<Ts...>const & var, InputT const& in, OutputT& out)
+template <typename VariantT, typename VisitorT>
+auto visit(VariantT&& var, VisitorT&& vis)
 {
     return std::visit(
-         [&](auto&& underlying){ return variant_cast<std::variant<Ts...>>(accept(underlying, in, out)); }
-        ,var
+         [&](auto&& v) { return variant_cast<cpp20::remove_cvref_t<VariantT>>(std::forward<VisitorT>(vis)(v)); }
+        ,std::forward<VariantT>(var)
     );    
 }
 

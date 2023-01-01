@@ -3,8 +3,7 @@
 */
 
 #include <cassert>
-#include <vector>
-#include <array>
+#include <iostream>
 
 #include "../../include/variant_visit.hpp"
 
@@ -32,46 +31,51 @@ struct rectangle
 };
 
 using shape = std::variant<circle,square,triangle,rectangle>; 
-using input = std::vector<double>; 
-using output = std::array<double,2>; 
 
-shape accept(circle const&, input const&, output&) {
-    // ..
+shape accept(circle const&) {
+    std::cout << "circle --> square" << std::endl;
     return square{};
 }
 
-auto accept(square const&, input const&, output&) {
-    // ..
+auto accept(square const&) {
+    std::cout << "square --> triangle" << std::endl;
     return std::variant<triangle>{};
 }
 
-auto accept(triangle const&, input const&, output&) {
-    // ..
+auto accept(triangle const&) {
+    std::cout << "triangle --> rectangle" << std::endl;
     return std::variant<rectangle>{rectangle{1 ,2}}; 
 }
 
-shape accept(rectangle const&, input const&, output&) {
-    // ..
+shape accept(rectangle const&) {
+    std::cout << "rectangle --> circle" << std::endl;
     return circle{3.1456};
+}
+
+auto next(shape const& s) {
+    return variant_ext::visit(s, [](auto&& v){ return accept(v); });
+}
+
+template <typename T>
+bool is_type_of(shape const& s) {
+    return std::holds_alternative<T>(s);
 }
 
 int main()
 {
-    input in;
-    output out;
     shape s;
 
-    assert(std::holds_alternative<circle>(s));
+    assert(is_type_of<circle>(s));
 
-    s = variant_ext::visit(s, in, out);
-    assert(std::holds_alternative<square>(s));
+    s = next(s);
+    assert(is_type_of<square>(s));
 
-    s = variant_ext::visit(s, in, out);
-    assert(std::holds_alternative<triangle>(s));
+    s = next(s);
+    assert(is_type_of<triangle>(s));
 
-    s = variant_ext::visit(s, in, out);
-    assert(std::holds_alternative<rectangle>(s));
+    s = next(s);
+    assert(is_type_of<rectangle>(s));
 
-    s = variant_ext::visit(s, in, out);
-    assert(std::holds_alternative<circle>(s));
+    s = next(s);
+    assert(is_type_of<circle>(s));
 }

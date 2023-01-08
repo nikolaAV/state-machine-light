@@ -15,10 +15,10 @@ struct InputData
 
 struct OutputData
 {
-    std::string feature_state = "Off";
+    std::string feature_state {"Off"};
     std::vector<double> position;
     std::vector<double> rotation;
-    bool cancelation_flag;
+    bool cancelation_flag {false};
 };
 
 namespace State {

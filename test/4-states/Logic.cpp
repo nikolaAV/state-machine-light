@@ -11,8 +11,7 @@ constexpr auto c_success = std::uint32_t{0};
 constexpr auto c_error_disabled = std::uint32_t{1};
 
 bool isAwaiting(InputData const& in) {
-    (void)in; // ....
-    return {};
+    return in.enabled && in.signal1==0 && in.signal2==0 && in.signal3==0;
 }
 
 uint32_t makeRequest(InputData const& in) {
@@ -25,14 +24,12 @@ uint32_t updateRequest(InputData const& in, uint32_t previous) {
     return {};
 }
 
-std::vector<double> calculatePosition(InputData const& in) {
-    (void)in; // ....
-    return {};
+std::vector<double> calculatePosition(InputData const&) {
+    return {1., 2.};
 }
 
-std::vector<double> calculateRotation(InputData const& in) {
-    (void)in; // ....
-    return {};
+std::vector<double> calculateRotation(InputData const&) {
+    return {3., 4.};
 }
 
 uint32_t getDuration(InputData const& in) {
@@ -148,9 +145,9 @@ auto accept(Showing const& current, InputData const& in, OutputData& out)
     return 
         !in.enabled ?
             transition{processDisabled()} :
-        in.signal1 < in.signal2 + in.signal3 ?
-            transition{processInterrupted()} :
         in.signal1 > in.signal2 + in.signal3 ?
+            transition{processInterrupted()} :
+        in.signal1 < in.signal2 + in.signal3 ?
             transition{processAnimation()} :
             transition{processFinish()}     // case: in.signal1 == in.signal2 + in.signal3
     ;

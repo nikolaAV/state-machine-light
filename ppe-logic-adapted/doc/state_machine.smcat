@@ -1,0 +1,22 @@
+CarOn_FirstP,
+CarOn_noP,
+CarOn_P,
+CarOff_P,
+CarOff_noP;
+
+initial => CarOn_FirstP             : [isIgnitionOn and isGearPositionParking]; 
+initial => CarOn_noP                : [isIgnitionOn and not isGearPositionParking];
+initial => CarOff_noP               : [not isIgnitionOn and not isGearPositionParking];  
+initial => CarOff_P                 : [not isIgnitionOn and isGearPositionParking];  
+
+CarOn_FirstP    => CarOn_noP        : [not isGearPositionParking];
+CarOn_FirstP    => CarOff_P         : [not isIgnitionOn];
+CarOn_noP       => CarOff_noP       : [not isIgnitionOn];
+CarOn_noP       => CarOn_P          : [isGearPositionParking];
+CarOn_P         => CarOn_noP        : [not isGearPositionParking];
+CarOn_P         => CarOff_P         : [not isIgnitionOn];
+CarOff_P        => CarOff_noP       : [not isGearPositionParking];
+CarOff_P        => CarOn_FirstP     : [isIgnitionOn];
+CarOff_noP      => CarOn_noP        : [isIgnitionOn];
+CarOff_noP      => CarOff_P         : [isGearPositionParking];
+

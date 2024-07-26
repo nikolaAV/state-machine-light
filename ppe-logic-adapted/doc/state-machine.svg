@@ -1,0 +1,144 @@
+<!DOCTYPE svg [<!ENTITY nbsp "&#160;">]><svg width="1092pt" height="341pt" viewBox="0.00 0.00 1092.21 340.80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 336.8)">
+<title>state transitions</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-336.8 1088.21,-336.8 1088.21,4 -4,4"></polygon>
+<!-- initial -->
+<g id="node1" class="node state initial">
+<title>initial</title>
+<ellipse fill="black" stroke="black" stroke-width="2" cx="511.66" cy="-327.4" rx="5.4" ry="5.4"></ellipse>
+</g>
+<!-- CarOn_FirstP -->
+<g id="node2" class="node state regular">
+<title>CarOn_FirstP</title>
+<polygon fill="#ffffff" fill-opacity="0.003922" stroke="none" stroke-width="2" points="181.33,-294 85.98,-294 85.98,-257.6 181.33,-257.6 181.33,-294"></polygon>
+<text text-anchor="start" x="96.98" y="-272.2" font-family="Helvetica,sans-Serif" font-size="12.00">CarOn_FirstP</text>
+<path fill="none" stroke="black" stroke-width="2" d="M98.45,-258.6C98.45,-258.6 168.86,-258.6 168.86,-258.6 174.6,-258.6 180.33,-264.33 180.33,-270.07 180.33,-270.07 180.33,-281.53 180.33,-281.53 180.33,-287.27 174.6,-293 168.86,-293 168.86,-293 98.45,-293 98.45,-293 92.72,-293 86.98,-287.27 86.98,-281.53 86.98,-281.53 86.98,-270.07 86.98,-270.07 86.98,-264.33 92.72,-258.6 98.45,-258.6"></path>
+</g>
+<!-- initial&#45;&gt;CarOn_FirstP -->
+<g id="edge1" class="edge transition">
+<title>initial-&gt;CarOn_FirstP</title>
+<path fill="none" stroke="black" d="M505.58,-326.37C463.75,-326.14 219.02,-324.36 187.78,-314 178.7,-310.99 169.76,-305.96 161.84,-300.55"></path>
+<polygon fill="black" stroke="black" points="164.1,-297.87 153.97,-294.78 159.96,-303.51 164.1,-297.87"></polygon>
+<text text-anchor="start" x="188.66" y="-305" font-family="Helvetica,sans-Serif" font-size="10.00">[isIgnitionOn and isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_noP -->
+<g id="node3" class="node state regular">
+<title>CarOn_noP</title>
+<polygon fill="#ffffff" fill-opacity="0.003922" stroke="none" stroke-width="2" points="335.34,-229.6 249.97,-229.6 249.97,-193.2 335.34,-193.2 335.34,-229.6"></polygon>
+<text text-anchor="start" x="260.97" y="-207.8" font-family="Helvetica,sans-Serif" font-size="12.00">CarOn_noP</text>
+<path fill="none" stroke="black" stroke-width="2" d="M262.44,-194.2C262.44,-194.2 322.87,-194.2 322.87,-194.2 328.61,-194.2 334.34,-199.93 334.34,-205.67 334.34,-205.67 334.34,-217.13 334.34,-217.13 334.34,-222.87 328.61,-228.6 322.87,-228.6 322.87,-228.6 262.44,-228.6 262.44,-228.6 256.7,-228.6 250.97,-222.87 250.97,-217.13 250.97,-217.13 250.97,-205.67 250.97,-205.67 250.97,-199.93 256.7,-194.2 262.44,-194.2"></path>
+</g>
+<!-- initial&#45;&gt;CarOn_noP -->
+<g id="edge2" class="edge transition">
+<title>initial-&gt;CarOn_noP</title>
+<path fill="none" stroke="black" d="M506.18,-324.9C491.81,-320.88 452,-309.11 421.1,-294 386.8,-277.23 350.28,-253.38 324.99,-235.8"></path>
+<polygon fill="black" stroke="black" points="327.31,-233.15 317.12,-230.26 323.29,-238.88 327.31,-233.15"></polygon>
+<text text-anchor="start" x="420.66" y="-272.8" font-family="Helvetica,sans-Serif" font-size="10.00">[isIgnitionOn and not isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_P -->
+<g id="node5" class="node state regular">
+<title>CarOff_P</title>
+<polygon fill="#ffffff" fill-opacity="0.003922" stroke="none" stroke-width="2" points="534.66,-100.8 462.65,-100.8 462.65,-64.4 534.66,-64.4 534.66,-100.8"></polygon>
+<text text-anchor="start" x="473.65" y="-79" font-family="Helvetica,sans-Serif" font-size="12.00">CarOff_P</text>
+<path fill="none" stroke="black" stroke-width="2" d="M475.11,-65.4C475.11,-65.4 522.2,-65.4 522.2,-65.4 527.93,-65.4 533.66,-71.13 533.66,-76.87 533.66,-76.87 533.66,-88.33 533.66,-88.33 533.66,-94.07 527.93,-99.8 522.2,-99.8 522.2,-99.8 475.11,-99.8 475.11,-99.8 469.38,-99.8 463.65,-94.07 463.65,-88.33 463.65,-88.33 463.65,-76.87 463.65,-76.87 463.65,-71.13 469.38,-65.4 475.11,-65.4"></path>
+</g>
+<!-- initial&#45;&gt;CarOff_P -->
+<g id="edge4" class="edge transition">
+<title>initial-&gt;CarOff_P</title>
+<path fill="none" stroke="black" d="M517.68,-326.27C541.97,-325.71 632.63,-323.02 659.66,-314 764.5,-278.99 932.89,-260.15 864.66,-173.2 825.48,-123.28 635.5,-97.57 545.77,-88.04"></path>
+<polygon fill="black" stroke="black" points="546.38,-84.58 536.08,-87.03 545.66,-91.54 546.38,-84.58"></polygon>
+<text text-anchor="start" x="879.66" y="-208.4" font-family="Helvetica,sans-Serif" font-size="10.00">[not isIgnitionOn and isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_noP -->
+<g id="node6" class="node state regular">
+<title>CarOff_noP</title>
+<polygon fill="#ffffff" fill-opacity="0.003922" stroke="none" stroke-width="2" points="436.34,-36.4 350.97,-36.4 350.97,0 436.34,0 436.34,-36.4"></polygon>
+<text text-anchor="start" x="361.97" y="-14.6" font-family="Helvetica,sans-Serif" font-size="12.00">CarOff_noP</text>
+<path fill="none" stroke="black" stroke-width="2" d="M363.44,-1C363.44,-1 423.87,-1 423.87,-1 429.6,-1 435.34,-6.73 435.34,-12.47 435.34,-12.47 435.34,-23.93 435.34,-23.93 435.34,-29.67 429.6,-35.4 423.87,-35.4 423.87,-35.4 363.44,-35.4 363.44,-35.4 357.71,-35.4 351.97,-29.67 351.97,-23.93 351.97,-23.93 351.97,-12.47 351.97,-12.47 351.97,-6.73 357.71,-1 363.44,-1"></path>
+</g>
+<!-- initial&#45;&gt;CarOff_noP -->
+<g id="edge3" class="edge transition">
+<title>initial-&gt;CarOff_noP</title>
+<path fill="none" stroke="black" d="M517.93,-326.86C537.64,-327.92 598.67,-328.19 626.66,-294 697.1,-207.93 719.27,-126.88 644.66,-44.4 631.68,-30.06 517.08,-23.51 447.29,-20.83"></path>
+<polygon fill="black" stroke="black" points="447.72,-17.34 437.59,-20.47 447.46,-24.34 447.72,-17.34"></polygon>
+<text text-anchor="start" x="688.66" y="-176.2" font-family="Helvetica,sans-Serif" font-size="10.00">[not isIgnitionOn and not isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_FirstP&#45;&gt;CarOn_noP -->
+<g id="edge5" class="edge transition">
+<title>CarOn_FirstP-&gt;CarOn_noP</title>
+<path fill="none" stroke="black" d="M177.1,-257.75C196.35,-250.19 219.18,-241.23 239.45,-233.28"></path>
+<polygon fill="black" stroke="black" points="240.65,-236.57 248.68,-229.66 238.09,-230.05 240.65,-236.57"></polygon>
+<text text-anchor="start" x="227.66" y="-240.6" font-family="Helvetica,sans-Serif" font-size="10.00">[not isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_FirstP&#45;&gt;CarOff_P -->
+<g id="edge6" class="edge transition">
+<title>CarOn_FirstP-&gt;CarOff_P</title>
+<path fill="none" stroke="black" d="M127.48,-257.81C120.71,-235.97 113.07,-197.92 131.28,-173.2 169.09,-121.86 361.01,-96.85 451.42,-87.77"></path>
+<polygon fill="black" stroke="black" points="451.59,-91.27 461.2,-86.81 450.91,-84.3 451.59,-91.27"></polygon>
+<text text-anchor="start" x="131.66" y="-176.2" font-family="Helvetica,sans-Serif" font-size="10.00">[not isIgnitionOn] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_P -->
+<g id="node4" class="node state regular">
+<title>CarOn_P</title>
+<polygon fill="#ffffff" fill-opacity="0.003922" stroke="none" stroke-width="2" points="398.67,-165.2 326.64,-165.2 326.64,-128.8 398.67,-128.8 398.67,-165.2"></polygon>
+<text text-anchor="start" x="337.64" y="-143.4" font-family="Helvetica,sans-Serif" font-size="12.00">CarOn_P</text>
+<path fill="none" stroke="black" stroke-width="2" d="M339.11,-129.8C339.11,-129.8 386.2,-129.8 386.2,-129.8 391.93,-129.8 397.67,-135.53 397.67,-141.27 397.67,-141.27 397.67,-152.73 397.67,-152.73 397.67,-158.47 391.93,-164.2 386.2,-164.2 386.2,-164.2 339.11,-164.2 339.11,-164.2 333.38,-164.2 327.64,-158.47 327.64,-152.73 327.64,-152.73 327.64,-141.27 327.64,-141.27 327.64,-135.53 333.38,-129.8 339.11,-129.8"></path>
+</g>
+<!-- CarOn_noP&#45;&gt;CarOn_P -->
+<g id="edge8" class="edge transition">
+<title>CarOn_noP-&gt;CarOn_P</title>
+<path fill="none" stroke="black" d="M250.24,-202.19C229.56,-196.28 211.38,-186.9 222.83,-173.2 234.57,-159.15 279.7,-152.92 315.56,-150.17"></path>
+<polygon fill="black" stroke="black" points="315.58,-153.68 325.31,-149.5 315.1,-146.69 315.58,-153.68"></polygon>
+<text text-anchor="start" x="223.66" y="-176.2" font-family="Helvetica,sans-Serif" font-size="10.00">[isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_noP&#45;&gt;CarOff_noP -->
+<g id="edge7" class="edge transition">
+<title>CarOn_noP-&gt;CarOff_noP</title>
+<path fill="none" stroke="black" d="M250.09,-209.63C156.83,-206.44 -52.27,-190.27 12.28,-108.8 52.57,-57.94 244.64,-33.12 339.87,-23.78"></path>
+<polygon fill="black" stroke="black" points="340.14,-27.27 349.76,-22.83 339.47,-20.3 340.14,-27.27"></polygon>
+<text text-anchor="start" x="12.66" y="-111.8" font-family="Helvetica,sans-Serif" font-size="10.00">[not isIgnitionOn] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_P&#45;&gt;CarOn_noP -->
+<g id="edge9" class="edge transition">
+<title>CarOn_P-&gt;CarOn_noP</title>
+<path fill="none" stroke="black" d="M352.93,-165.17C348.55,-171.94 342.94,-179.46 336.66,-185.2 336.15,-185.66 335.63,-186.12 335.1,-186.58"></path>
+<polygon fill="black" stroke="black" points="333.04,-183.75 327.17,-192.56 337.26,-189.33 333.04,-183.75"></polygon>
+<text text-anchor="start" x="345.66" y="-176.2" font-family="Helvetica,sans-Serif" font-size="10.00">[not isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOn_P&#45;&gt;CarOff_P -->
+<g id="edge10" class="edge transition">
+<title>CarOn_P-&gt;CarOff_P</title>
+<path fill="none" stroke="black" d="M398.65,-131.28C406.6,-127.92 414.94,-124.3 422.66,-120.8 433.09,-116.06 444.22,-110.76 454.65,-105.67"></path>
+<polygon fill="black" stroke="black" points="456.01,-108.9 463.45,-101.35 452.93,-102.62 456.01,-108.9"></polygon>
+<text text-anchor="start" x="447.66" y="-111.8" font-family="Helvetica,sans-Serif" font-size="10.00">[not isIgnitionOn] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_P&#45;&gt;CarOn_FirstP -->
+<g id="edge12" class="edge transition">
+<title>CarOff_P-&gt;CarOn_FirstP</title>
+<path fill="none" stroke="black" d="M526.69,-100.56C529.06,-103.03 531.14,-105.78 532.66,-108.8 548.99,-141.24 531.16,-161.48 503.66,-185.2 457.34,-225.14 284.59,-254.17 192.44,-267.18"></path>
+<polygon fill="black" stroke="black" points="192,-263.71 182.57,-268.55 192.96,-270.64 192,-263.71"></polygon>
+<text text-anchor="start" x="516.66" y="-176.2" font-family="Helvetica,sans-Serif" font-size="10.00">[isIgnitionOn] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_P&#45;&gt;CarOff_noP -->
+<g id="edge11" class="edge transition">
+<title>CarOff_P-&gt;CarOff_noP</title>
+<path fill="none" stroke="black" d="M462.88,-77.65C436.12,-73.88 402.74,-67.16 394.15,-56.4 392.07,-53.8 390.81,-50.73 390.12,-47.5"></path>
+<polygon fill="black" stroke="black" points="393.63,-47.63 389.7,-37.79 386.64,-47.94 393.63,-47.63"></polygon>
+<text text-anchor="start" x="393.66" y="-47.4" font-family="Helvetica,sans-Serif" font-size="10.00">[not isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_noP&#45;&gt;CarOn_noP -->
+<g id="edge13" class="edge transition">
+<title>CarOff_noP-&gt;CarOn_noP</title>
+<path fill="none" stroke="black" d="M376.58,-36.07C356.66,-57.8 329.06,-95.72 350.96,-120.8 359.61,-130.72 397.28,-124.32 409.66,-128.8 539.89,-175.92 513.53,-147.62 480.66,-185.2 463.49,-204.82 395.66,-209.81 346.39,-210.76"></path>
+<polygon fill="black" stroke="black" points="346.4,-207.26 336.45,-210.9 346.5,-214.26 346.4,-207.26"></polygon>
+<text text-anchor="start" x="350.66" y="-111.8" font-family="Helvetica,sans-Serif" font-size="10.00">[isIgnitionOn] &nbsp;&nbsp;</text>
+</g>
+<!-- CarOff_noP&#45;&gt;CarOff_P -->
+<g id="edge14" class="edge transition">
+<title>CarOff_noP-&gt;CarOff_P</title>
+<path fill="none" stroke="black" d="M436.07,-21.64C469.94,-24.57 513.52,-30.92 524.66,-44.4 527.35,-47.66 527.77,-51.18 526.76,-54.72"></path>
+<polygon fill="black" stroke="black" points="523.79,-52.86 521.58,-63.22 529.77,-56.5 523.79,-52.86"></polygon>
+<text text-anchor="start" x="526.66" y="-47.4" font-family="Helvetica,sans-Serif" font-size="10.00">[isGearPositionParking] &nbsp;&nbsp;</text>
+</g>
+</g>
+</svg>

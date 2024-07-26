@@ -1,0 +1,10 @@
+#ifndef HEADER_GUARD_WVZKEHGXJITAGYNT
+#define HEADER_GUARD_WVZKEHGXJITAGYNT
+
+enum class EFeatureState
+{
+    Off,
+    On
+};
+
+#endif // HEADER_GUARD_WVZKEHGXJITAGYNT
